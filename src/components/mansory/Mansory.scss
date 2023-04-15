@@ -1,0 +1,16 @@
+.masonry-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 16px;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+.masonry-item {
+  background-color: aqua;
+}
+.masonry-layout > * {
+  grid-column: span 1;
+  grid-row: span 1;
+}

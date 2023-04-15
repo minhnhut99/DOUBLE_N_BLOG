@@ -1,0 +1,43 @@
+@import "@/styles/styles.scss";
+@mixin border {
+  border:1px solid $black-color;
+  border-radius: 7px;
+}
+.btn {
+  &-tiny {
+    width: 60px;
+    height: 20px;
+    @include border
+  }
+  &-small {
+    width: 45px;
+    height: 30px;
+    @include border
+
+  }
+  &-medium {
+    width: 80px;
+    height: 35px;
+    @include border
+
+  }
+  &-large {
+    width: 110px;
+    height: 40px;
+    @include border
+  }
+  &-black {
+    cursor: pointer;
+    background-color: $black-color;
+    color: $white-color;
+    font-weight: 600;
+    border-radius: 7px;
+    transition: all 0.15s;
+    &:hover {
+      background-color: rgb(56, 55, 55);
+    }
+  }
+  &-full-width {
+    width: 100%;
+  }
+}

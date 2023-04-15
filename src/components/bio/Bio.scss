@@ -1,0 +1,25 @@
+@import "@/styles/styles.scss";
+.bio {
+  width: 100%;
+  margin-bottom: 20px;
+  &-container {
+    padding-top: 60px;
+    max-width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-heading {
+    font-weight: bold;
+    font-size: 60px;
+    text-align: center;
+  }
+  &-text {
+    font-size: 20px;
+    width: 70%;
+    text-align: center;
+    line-height: 1.6;
+    color: $gray-text-color;
+  }
+}

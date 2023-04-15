@@ -1,0 +1,13 @@
+@import "@/styles/styles.scss";
+.icon-svg-light {
+  svg {
+    stroke: $white-color;
+    cursor: pointer;
+  }
+}
+.icon-svg-dark {
+  svg {
+    stroke: $dark-blue-color;
+    cursor: pointer;
+  }
+}

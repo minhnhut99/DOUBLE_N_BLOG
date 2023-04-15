@@ -1,0 +1,168 @@
+@import "@/styles/styles.scss";
+.card {
+  width: 100%;
+  margin-right: 30px;
+  &-container {
+    width: 100%;
+    img {
+      object-fit: cover;
+      height: 200px;
+      width: 100%;
+      border-radius: 15px;
+    }
+  }
+  &-container-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    img {
+      width: 25%;
+      object-fit: cover;
+      height: 250px;
+      border-radius: 15px;
+      margin-right: 20px;
+    }
+    .card-right {
+      width: 50%;
+    }
+    .card-category {
+      background-color: pink;
+      border-radius: 8px;
+      width: fit-content;
+      height: fit-content;
+      p {
+        font-size: 11px;
+        font-weight: 500;
+        color: currentColor;
+        width: fit-content;
+      }
+    }
+    .card-title {
+      font-weight: bold;
+      font-size: 22px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: $gray-text-color;
+      line-height: 1.6;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+    .card-author {
+      font-weight: 500;
+    }
+    .card-date {
+      color: $gray-text-color;
+      font-size: 12px;
+    }
+  }
+  &-header-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .like-cmt-group {
+      display: flex;
+      align-items: center;
+      .icon-like {
+        svg {
+          stroke: #5496ec;
+        }
+        position: relative;
+        .total-like {
+          position: absolute;
+          color: #5496ec;
+          font-size: 9px;
+          top: -5px;
+          right: -5px;
+          font-weight: bold;
+        }
+      }
+      .icon-cmt {
+        position: relative;
+        svg {
+          stroke: #a90ee6;
+        }
+        .total-cmt {
+          color: #a90ee6;
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          font-size: 9px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .color {
+    &-life {
+      color: #df4e66;
+    }
+    &-music {
+      color: #51e746;
+    }
+    &-technology {
+      color: #f39f17;
+    }
+    &-story {
+      color: #f3d77a;
+    }
+  }
+  &-category {
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 3px;
+    padding: 2px 3px;
+    width: fit-content;
+  }
+  &-title {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 0 0 10px 0;
+  }
+  &-desc {
+    font-size: 13px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: pre-wrap;
+    color: $gray-text-color;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  &-footer {
+    display: flex;
+    align-items: center;
+    img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+  &-author {
+    font-weight: 500;
+    font-size: 17px;
+    &-date {
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      display: flex;
+    }
+  }
+  &-date {
+    color: $gray-text-color;
+    margin-left: auto;
+    font-size: 13px;
+  }
+}
