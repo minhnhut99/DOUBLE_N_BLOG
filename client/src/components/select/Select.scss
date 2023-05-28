@@ -1,0 +1,19 @@
+.select-custom {
+  /* Tùy chỉnh các thuộc tính CSS cho phần tử select option */
+  /* Ví dụ: */
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+}
+
+.select-custom option {
+  /* Tùy chỉnh các thuộc tính CSS cho phần tử option trong select */
+  /* Ví dụ: */
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+}

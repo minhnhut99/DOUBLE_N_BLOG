@@ -1,20 +1,32 @@
+import { useState } from "react"
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
+import { useRegisterMutation } from '@/api/auth';
 import Input from '@/components/input/Input'
 import Button from '@/components/button/Button'
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import Icon from '@/components/icon/Icon';
+import { EYE_HIDDEN_ICON, EYE_SHOW_ICON } from '@/assets/icons/Icons';
 import './Register.scss'
-import { useNavigate } from 'react-router-dom';
 interface FormValues {
+  name: string,
   username: string;
   password: string;
   confirmpassword: string;
   email: string;
   gender: string;
   address: string;
-  birthday: string
+  birthday: string;
+  phone: string;
 }
 const Register = () => {
+  const [isShowPassword, setIsShowPassword] = useState(false)
+  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false)
   const navigate = useNavigate();
+  const registerMutation = useRegisterMutation()
   const registerOptions = {
+    name: {
+      required: "Full name is required"
+    },
     email: {
       required: 'Email is required',
       pattern: {
@@ -53,6 +65,17 @@ const Register = () => {
           return "Your passwords do no match";
         }
       }
+    },
+    phone: {
+      required: "Phone is required",
+      minLength: {
+        value: 10,
+        message: "Password must have at least 10 characters",
+      },
+      maxLength: {
+        value: 11,
+        message: "MaxLength is  11 characters",
+      }
     }
   };
   const { control, handleSubmit, watch
@@ -60,132 +83,192 @@ const Register = () => {
       {
         defaultValues: {
           username: "",
-          password: ""
+          password: "",
+          name: "",
+          gender: "",
+          email: "",
+          phone: "",
+          birthday: "",
+          address: "",
         }
       }
     )
-  const handleClickBtnregister: SubmitHandler<FormValues> = (data) => {
-    console.log('dataregister', data)
+  const handleClickBtnRegister: SubmitHandler<FormValues> = async ({ name, username, password, gender, email, birthday, phone, address }) => {
+    registerMutation.mutateAsync(
+      { name, username, password, gender, email, birthday, phone, address }
+    )
+    navigate("/login")
   }
   const handleClickRedirectLogin = () => {
     navigate("/login")
+  }
+  const handleClickToggleShowPassword = () => {
+    setIsShowPassword(!isShowPassword)
+  }
+  const handleClickToggleShowConfirmPassword = () => {
+    setIsShowConfirmPassword(!isShowConfirmPassword)
   }
   return (
     <div className='register'>
       <div className="register-container">
         <h1 className='register-heading'>register</h1>
         <div className="register-form">
-          <form onSubmit={handleSubmit(handleClickBtnregister)}>
-            <div className='register-form-item'>
-              <Controller
-                control={control}
-                rules={registerOptions.email}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Input placeholder='email'
-                    value={value}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name="email"
-                  />
-                )}
-                name="email"
-              />
+          <form onSubmit={handleSubmit(handleClickBtnRegister)}>
+            <div className='register-form-full'>
+              <div className='register-form-item'>
+                <Controller
+                  control={control}
+                  rules={registerOptions.name}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <Input placeholder='full name'
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      name="name"
+                    />
+                  )}
+                  name="name"
+                />
+              </div>
+              <small className='error-alert'>
+                {errors?.name && errors.name.message}
+              </small>
             </div>
-            <small className='error-alert'>
-              {errors?.email && errors.email.message}
-            </small>
-            <div className='register-form-item'>
-              <Controller
-                control={control}
-                rules={registerOptions.username}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Input placeholder='username'
-                    value={value}
-                    onChange={onChange}
-                    onBlur={onBlur}
+            <div className='register-form-wrap'>
+              <div>
+                <div className='register-form-item'>
+                  <Controller
+                    control={control}
+                    rules={registerOptions.username}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <Input placeholder='username'
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name="username"
+                      />
+                    )}
                     name="username"
                   />
-                )}
-                name="username"
-              />
-            </div>
-            <small className='error-alert'>
-              {errors?.username && errors.username.message}
-            </small>
-            <div className='register-form-item'>
-              <Controller
-                control={control}
-                rules={registerOptions.password}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Input placeholder='password'
-                    type='password'
-                    value={value}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name='password'
+                </div>
+                <small className='error-alert'>
+                  {errors?.username && errors.username.message}
+                </small>
+              </div>
+              <div>
+                <div className='register-form-item'>
+                  <Controller
+                    control={control}
+                    rules={registerOptions.email}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <Input placeholder='email'
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name="email"
+                      />
+                    )}
+                    name="email"
                   />
-                )}
-                name="password"
-              />
+                </div>
+                <small className='error-alert'>
+                  {errors?.email && errors.email.message}
+                </small>
+              </div>
             </div>
-            <small className='error-alert'>
-              {errors?.password && errors.password.message}
-            </small>
-            <div className='register-form-item'>
-              <Controller
-                control={control}
-                rules={registerOptions.confirmpassword}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Input placeholder='confirm password'
-                    value={value}
-                    type='password'
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name='confirmpassword'
+            <div className='register-form-wrap'>
+              <div>
+                <div className='register-form-item'>
+                  <Controller
+                    control={control}
+                    rules={registerOptions.password}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <Input placeholder='password'
+                        type={isShowPassword ? "text" : "password"}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name='password'
+                      />
+                    )}
+                    name="password"
                   />
-                )}
-                name="confirmpassword"
-              />
-            </div>
-            <small className='error-alert'>
-              {errors?.confirmpassword && errors.confirmpassword.message}
-            </small>
-            <div className='register-form-item'>
-              <Controller
-                control={control}
-                rules={registerOptions.address}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Input placeholder='address'
-                    value={value}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name="address"
+                  <Icon
+                    onClick={handleClickToggleShowPassword}
+                    icon={isShowPassword ? EYE_SHOW_ICON : EYE_HIDDEN_ICON} classNameAdditional='eye-show-hidden' />
+                </div>
+                <small className='error-alert'>
+                  {errors?.password && errors.password.message}
+                </small>
+              </div>
+              <div>
+                <div className='register-form-item'>
+                  <Controller
+                    control={control}
+                    rules={registerOptions.confirmpassword}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <Input placeholder='confirm password'
+                        value={value}
+                        type={isShowConfirmPassword ? "text" : 'password'}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name='confirmpassword'
+                      />
+                    )}
+                    name="confirmpassword"
                   />
-                )}
-                name="address"
-              />
+                  <Icon
+                    onClick={handleClickToggleShowConfirmPassword}
+                    icon={isShowConfirmPassword ? EYE_SHOW_ICON : EYE_HIDDEN_ICON} classNameAdditional='eye-show-hidden' />
+                </div>
+                <small className='error-alert'>
+                  {errors?.confirmpassword && errors.confirmpassword.message}
+                </small>
+              </div>
             </div>
-            <small className='error-alert'>
-              {errors?.address && errors.address.message}
-            </small>
 
-            <div className='register-birthday'>
-              <Controller
-                control={control}
-                rules={registerOptions.address}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <Input
-                    type='date'
-                    value={value}
-                    onChange={onChange}
-                    onBlur={onBlur}
+            <div className="register-form-wrap">
+              <div>
+                <div className='register-form-item'>
+                  <Controller
+                    control={control}
+                    rules={registerOptions.phone}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <Input placeholder='phone'
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name="phone"
+                      />
+                    )}
+                    name="phone"
+                  />
+                </div>
+                <small className='error-alert'>
+                  {errors?.phone && errors.phone.message}
+                </small>
+              </div>
+              <div className='res-wrap-birthday'>
+                <div className='register-birthday'>
+                  <Controller
+                    control={control}
+                    rules={registerOptions.address}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <Input
+                        type='text'
+                        placeholder="Birthday"
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name="birthday"
+                        onFocus={() => (document.getElementsByName("birthday")[0] as HTMLInputElement).type = 'date'
+                        } />
+                    )}
                     name="birthday"
                   />
-                )}
-                name="birthday"
-              />
+                </div>
+              </div>
             </div>
-
             <div className='group-gender'>
               {/* men  */}
               <div className='register-gender-item'>
@@ -245,6 +328,26 @@ const Register = () => {
                 />
                 <label htmlFor="other">Other</label>
               </div>
+            </div>
+            <div className="register-form-full">
+              <div className='register-form-item'>
+                <Controller
+                  control={control}
+                  rules={registerOptions.address}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <Input placeholder='address'
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      name="address"
+                    />
+                  )}
+                  name="address"
+                />
+              </div>
+              <small className='error-alert'>
+                {errors?.address && errors.address.message}
+              </small>
             </div>
             <small onClick={handleClickRedirectLogin} className="have-account">You have account?</small>
             <div className='btn-submit'>

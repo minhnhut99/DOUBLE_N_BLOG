@@ -1,35 +1,57 @@
-import React from 'react'
-import './Example.scss'
-import { useState } from "react"
-import axios from "axios"
-import { useQuery } from "@tanstack/react-query"
-import { useSearchParams } from 'react-router-dom'
-import Modal from '../modal/Modal'
+import React, { useState, useRef, useLayoutEffect } from 'react';
+import { Editor } from '@tinymce/tinymce-react';
+import Button from '@/components/button/Button';
+import Title from '@/components/title/Title';
+import { Controller, useForm } from 'react-hook-form';
+import Input from '@/components/input/Input';
+interface IFormValues {
+  title: string,
+  content: string,
+  desc: string,
+  cateId: number
+}
 const Example = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const handleClickBtnOpenModal = () => {
-    setIsOpen(!isOpen)
+  const API_KEY = "iyikkyl1ntr73cppsj58bpsiprysja2ru13iw2z4iqeml1iw";
+  const [content, setContent] = useState<string>("")
+  const handleEditorChange = async (content: string, editor: any) => {
+    await setContent(content)
+  };
+  const onSubmit = (data: IFormValues) => {
+    data.content = content
+    console.log('dataMAser', data)
   }
-  // const getFetch = async () => {
-  //   const rs = await axios.get("https://dummyjson.com/products?limit=10&skip=10&select=title,price")
-  //   return rs.data
-  // }
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ["fetchData"],
-  //   queryFn: () => getFetch()
-  // }
-  // )
-  // console.log('isLoadng', isLoading)
-  // console.log('dataMaster', data.products)
+  const { control, handleSubmit
+    , formState: { errors } } = useForm<IFormValues>(
+      {
+        defaultValues: {
+          title: "",
+          content: content,
+          desc: '',
+          cateId: 1
+        }
+      }
+    )
   return (
-    <>
-      <button onClick={handleClickBtnOpenModal}>click</button>
-      <Modal setIsOpen={setIsOpen} children={<div>Modal</div>} isOpen={isOpen} />
-      <div>
-        123
-      </div>
-    </>
+    < Editor
+      value={content}
+      textareaName='content'
+      apiKey={API_KEY}
+      plugins="image"
+      init={{
+        height: 240,
+        menubar: true,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        // toolbar: 'undo redo | formatselect | image ' +
+        // 'bold italic backcolor | alignleft aligncenter ' +
+        // 'alignright alignjustify | bullist numlist outdent indent | ' +
+        // 'removeformat | help',
+      }}
+      onEditorChange={handleEditorChange}
+    />
   )
 }
-
-export default Example
+export default Example;

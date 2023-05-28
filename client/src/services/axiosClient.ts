@@ -1,12 +1,16 @@
+import { getCookie } from '@/utils/getCookie';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
+import { useRecoilValue } from 'recoil';
+import { auth } from '@/recoil/atoms/auth';
+const { token } = useRecoilValue(auth);
+console.log('token', token);
 // Create a custom Axios configuration
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: 'https://api.example.com', // API base URL
+  baseURL: import.meta.env.VITE_API_CORE, // API base URL
   timeout: 5000, // Request timeout in milliseconds
   headers: {
-    'Content-Type': 'application/json', // Example headers
-    'Authorization': 'Bearer <your_auth_token>',
+    'Content-Type': 'multipart/form-data', // Example headers
+    Authorization: `Bearer ${token}`,
   },
 };
 
@@ -17,6 +21,7 @@ const apiClient: AxiosInstance = axios.create(axiosConfig);
 apiClient.interceptors.request.use(
   (config: any) => {
     // Modify request config, if needed
+    config = axiosConfig;
     return config;
   },
   (error: any) => {

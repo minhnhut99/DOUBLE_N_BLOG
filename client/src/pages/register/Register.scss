@@ -18,14 +18,16 @@
     display: flex;
     align-items: center;
     margin-bottom: 7px;
-    margin-top: 10px;
+    margin-top: -6px;
   }
   &-birthday {
+    width: 90%;
     input {
-      padding: 7px;
+      padding:8px;
       border-radius: 7px;
       outline: none;
-      border: 1px solid #cac6c6;
+      border: 1px solid $black-color;
+      width: 100%;
     }
   }
   &-gender-item {
@@ -38,14 +40,43 @@
     text-align: center;
     text-transform: uppercase;
   }
+  &-form-full {
+    width: 100%;
+    .register-form-item {
+      width: 95.5%;
+      input {
+        width: 100%;
+      }
+    }
+  }
   &-form {
     .error-alert {
       color: #e43636;
       font-size: 12px;
       padding-left: 2px;
     }
+    .eye-show-hidden {
+      position: absolute;
+      right: 3%;
+      top: 25%;
+    }
+    &-wrap {
+      display: flex;
+      align-items: baseline;
+      .res-wrap-birthday {
+        width: 100%;
+       p {
+        margin-right: 10px;
+        font-size: 11px;
+       }
+        display: flex;
+        align-items: center;
+      }
+    }
   }
   &-form-item {
+    position: relative;
+    margin-right: 10px;
     input {
       outline: none;
       width: 250px;
@@ -61,10 +92,12 @@
   }
   .have-account {
     display: block;
-    text-align: right;
+    margin-left: auto;
+    margin-right: 8px;
     text-decoration: underline;
     margin-bottom: 15px;
     font-size: 12px;
+    width: fit-content;
     cursor: pointer;
   }
   .btn-submit {

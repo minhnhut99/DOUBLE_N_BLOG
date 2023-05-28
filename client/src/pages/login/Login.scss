@@ -19,13 +19,14 @@
     text-transform: uppercase;
   }
   &-form {
-    .error-alert {
-      color: #e43636;
-      font-size: 12px;
-      padding-left: 2px;
+    .eye-show-hidden {
+      position: absolute;
+      right: 3%;
+      top: 25%;
     }
   }
   &-form-item {
+    position: relative;
     input {
       outline: none;
       width: 250px;
@@ -65,13 +66,16 @@
       cursor: pointer;
     }
   }
-  .have-account {
-    cursor: pointer;
-    margin-top: 5px;
-    font-size: 12px;
-    text-decoration: underline;
-    display: block;
-    text-align: right;
+  .have-account-block {
+    display: flex;
+    justify-content: flex-end;
+    .have-account {
+      width: fit-content;
+      cursor: pointer;
+      margin-top: 5px;
+      font-size: 12px;
+      text-decoration: underline;
+    }
   }
   .btn-submit {
     text-align: center;

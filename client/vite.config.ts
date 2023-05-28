@@ -7,4 +7,10 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
+  server: {
+    port: 9999
+  },
+  preview: {
+    port: 9999
+  }
 })
