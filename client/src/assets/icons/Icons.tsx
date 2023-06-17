@@ -70,6 +70,23 @@ export const CARET_DOWN_ICON = (
     <path d="M18 15l-6 -6l-6 6h12" transform="rotate(180 12 12)" />
   </svg>
 );
+export const CARET_UP_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-caret-up"
+    width="28"
+    height="28"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#161d26"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M18 14l-6 -6l-6 6h12" />
+  </svg>
+);
 export const SEE_MORE_ICON = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +123,6 @@ export const CLOSE_ICON = (
     <path d="M10 10l4 4m0 -4l-4 4" />
   </svg>
 );
-
 export const MENU_ICON = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +142,6 @@ export const MENU_ICON = (
     <line x1="4" y1="18" x2="20" y2="18" />
   </svg>
 );
-
 export const LIKE_ICON = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -134,17 +149,16 @@ export const LIKE_ICON = (
     width="28"
     height="28"
     viewBox="0 0 24 24"
-    stroke-width="1.5"
+    strokeWidth="1.5"
     stroke="#040b1f"
     fill="none"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" />
   </svg>
 );
-
 export const COMMENT_ICON = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -152,11 +166,11 @@ export const COMMENT_ICON = (
     width="28"
     height="28"
     viewBox="0 0 24 24"
-    stroke-width="1.5"
+    strokeWidth="1.5"
     stroke="#040b1f"
     fill="none"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M4 21v-13a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-9l-4 4" />
@@ -165,7 +179,6 @@ export const COMMENT_ICON = (
     <line x1="16" y1="11" x2="16" y2="11.01" />
   </svg>
 );
-
 export const EYE_SHOW_ICON = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -219,5 +232,120 @@ export const ADD_ICON = (
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M12 5l0 14" />
     <path d="M5 12l14 0" />
+  </svg>
+);
+export const USER_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-user-circle"
+    width={28}
+    height={28}
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#040b1f"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+  </svg>
+);
+export const ARROW_R_LONG_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-arrow-narrow-right"
+    width={28}
+    height={28}
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#ffffff"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M5 12l14 0" />
+    <path d="M15 16l4 -4" />
+    <path d="M15 8l4 4" />
+  </svg>
+);
+export const BACK_TO_TOP = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-arrow-narrow-up"
+    width={50}
+    height={40}
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#040b1f"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M12 5l0 14" />
+    <path d="M16 9l-4 -4" />
+    <path d="M8 9l4 -4" />
+  </svg>
+);
+export const WRITE_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-writing"
+    width={28}
+    height={28}
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#040b1f"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M20 17v-12c0 -1.121 -.879 -2 -2 -2s-2 .879 -2 2v12l2 2l2 -2z" />
+    <path d="M16 7h4" />
+    <path d="M18 19h-13a2 2 0 1 1 0 -4h4a2 2 0 1 0 0 -4h-3" />
+  </svg>
+);
+export const NOTIFY_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-bell-ringing-2"
+    width={28}
+    height={28}
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#040b1f"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
+    <path d="M7.343 12.414l-.707 .707a3 3 0 0 0 4.243 4.243l.707 -.707" />
+  </svg>
+);
+
+export const SKELETON_IMAGE_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-photo"
+    width={28}
+    height={28}
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#040b1f"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M15 8h.01" />
+    <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+    <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+    <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
   </svg>
 );

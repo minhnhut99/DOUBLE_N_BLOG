@@ -1,4 +1,5 @@
 import { AUTH_LOGIN, AUTH_REGISTER } from '@/constant/apiConstant';
+import { Path } from '@/constant/appConstant';
 import { useAppClient } from '@/http/useAppClient';
 import { auth } from '@/recoil/atoms/auth';
 import {
@@ -13,6 +14,7 @@ import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
 
 export const useLoginMutation = () => {
+  const navigate = useNavigate();
   const [authValue, setAuthValue] = useRecoilState(auth);
   const { http } = useAppClient();
   return useMutation(
@@ -34,6 +36,7 @@ export const useLoginMutation = () => {
         document.cookie = `token=${token}`;
         document.cookie = `user=${JSON.stringify(user)}`;
         toast.success('Login successfully!');
+        navigate(Path.home);
       },
       onError: (error: any) => {
         toast.error(error.message);
@@ -43,8 +46,8 @@ export const useLoginMutation = () => {
 };
 
 export const useRegisterMutation = () => {
-  const { http } = useAppClient();
   const navigate = useNavigate();
+  const { http } = useAppClient();
   return useMutation(
     async (req: IUserRegisterRequest) => {
       const res = await http.postMethod<IUserLoginRequest, any>(
@@ -56,7 +59,7 @@ export const useRegisterMutation = () => {
     {
       onSuccess: async ({ data }: AxiosResponse<IUserLoginResponse>) => {
         toast.success('Register successfully!');
-        navigate('/login');
+        navigate(Path.login);
       },
       onError: (error: any) => {
         toast.error(error.message);

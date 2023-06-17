@@ -1,15 +1,16 @@
-import { ChangeEvent, useRef, useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Editor } from '@tinymce/tinymce-react';
-import Button from '@/components/button/Button';
-import Input from '@/components/input/Input';
-import Title from '@/components/title/Title';
-import Icon from '@/components/icon/Icon';
-import { ADD_ICON } from '@/assets/icons/Icons';
-import './CreatePost.scss';
+import { useGetAllCategoryQuery } from '@/api/category';
 import { useCreatePostMutation } from '@/api/post';
-import { ICreatePostRequest, ICreatePostResponse } from '@/type/post';
+import { ADD_ICON } from '@/assets/icons/Icons';
+import Button from '@/components/button/Button';
+import Icon from '@/components/icon/Icon';
+import Input from '@/components/input/Input';
 import Select from '@/components/select/Select';
+import Title from '@/components/title/Title';
+import { Editor } from '@tinymce/tinymce-react';
+import { ChangeEvent, useLayoutEffect, useRef, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import './CreatePost.scss';
+
 interface IFormValues {
   title: string;
   content: string;
@@ -20,25 +21,37 @@ interface IFormValues {
 
 const CreatePost = () => {
   const editorRef = useRef<any>(null);
+  const editorContainerRef = useRef<any>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const [imageThumbnail, setImageThumbnail] = useState<File | null>(null);
   const createPostMutation = useCreatePostMutation();
-  const onSubmit: SubmitHandler<IFormValues> = (data) => {
-    data.file = imageThumbnail!;
+  const getAllCategory = useGetAllCategoryQuery();
+  useLayoutEffect(() => {
+    if (editorContainerRef.current) {
+      editorContainerRef.current.style.height = '400px';
+    }
+    const ele = document.getElementById('editorId');
+    if (ele) {
+      ele.style.height = '100%';
+      ele.style.width = '100%';
+    }
+  }, []);
+  const onSubmit: SubmitHandler<IFormValues> = async (data) => {
     const payload = new FormData();
     payload.append('title', data.title);
     payload.append('desc', data.desc);
     payload.append('content', data.content);
     payload.append('file', imageThumbnail!);
-    payload.append('cateId', '1');
+    payload.append('cateId', data.cateId.toString());
     createPostMutation.mutate(payload);
+    resetPost();
   };
-
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<IFormValues>({
     defaultValues: {
       title: '',
@@ -48,7 +61,6 @@ const CreatePost = () => {
       file: null,
     },
   });
-
   const createPostOptions = {
     title: {
       required: 'Title post is required',
@@ -101,33 +113,23 @@ const CreatePost = () => {
     };
     input.click();
   };
-  const handleClickBtnCancel = () => {
+  const resetPost = () => {
     setImagePreview('');
     reset();
     if (editorRef.current) {
       editorRef.current.setContent('');
     }
   };
-  const opt = [
-    {
-      value: '1',
-      label: '1',
-    },
-    {
-      value: '2',
-      label: '2',
-    },
-    {
-      value: '3',
-      label: '3',
-    },
-  ];
-  const handleChangeSelect = () => {};
+  const handleClickBtnCancel = () => {
+    resetPost();
+  };
+  const handleSelectChange = (selectedValue: number) => {
+    setValue('cateId', selectedValue);
+  };
   return (
     <div className="create-post">
       <Title text="Create Post" />
       <form className="create-post-form" onSubmit={handleSubmit(onSubmit)}>
-        <Select options={opt} value={'2'} onChange={handleChangeSelect} />
         <div className="create-post-header">
           {/* choose thumbnail  */}
           <div className="create-post-header-left">
@@ -139,7 +141,7 @@ const CreatePost = () => {
                 <Input
                   id="create-thumbnail"
                   type="file"
-                  value={value}
+                  value={value || ''}
                   accept="image/png, image/jpeg"
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     const file = e.target.files?.[0];
@@ -147,7 +149,6 @@ const CreatePost = () => {
                       const imageObjUrl = URL.createObjectURL(file);
                       setImagePreview(imageObjUrl);
                       setImageThumbnail(file);
-                      console.log('file THummail', file);
                     }
                     onChange(e);
                   }}
@@ -171,6 +172,19 @@ const CreatePost = () => {
           </div>
           <div className="create-post-header-right">
             {/* post title */}
+            <div className="create-post-category">
+              <Controller
+                control={control}
+                render={() => (
+                  <Select
+                    setValue={handleSelectChange}
+                    placeholder="Category"
+                    options={getAllCategory?.data}
+                  />
+                )}
+                name="cateId"
+              />
+            </div>
             <div className="create-post-title">
               <Controller
                 control={control}
@@ -220,7 +234,7 @@ const CreatePost = () => {
           control={control}
           rules={createPostOptions.content}
           render={({ field }) => (
-            <>
+            <div ref={editorContainerRef}>
               <Editor
                 ref={editorRef}
                 onInit={(evt, editor) => (editorRef.current = editor)}
@@ -232,17 +246,19 @@ const CreatePost = () => {
                   file_picker_type: 'file image media',
                   file_picker_callback: filePickerCallback,
                   height: 400,
+                  content_style:
+                    '.editor_container {height: 400px}',
                   toolbar:
                     'undo redo | formatselect | bold italic backcolor | \
-                  alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help',
+                        alignleft aligncenter alignright alignjustify | \
+                        bullist numlist outdent indent | removeformat | help',
                 }}
                 onEditorChange={(content) => field.onChange(content)}
               />
               <small className="error-alert">
                 {errors?.content && errors.content.message}
               </small>
-            </>
+            </div>
           )}
         />
         <div className="btn-actions">

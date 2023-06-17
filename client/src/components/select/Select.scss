@@ -1,19 +1,71 @@
-.select-custom {
-  /* Tùy chỉnh các thuộc tính CSS cho phần tử select option */
-  /* Ví dụ: */
-  width: 200px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
-  font-size: 14px;
-}
-
-.select-custom option {
-  /* Tùy chỉnh các thuộc tính CSS cho phần tử option trong select */
-  /* Ví dụ: */
-  background-color: #fff;
-  color: #333;
-  font-size: 14px;
+@import "@/styles/styles.scss";
+.select {
+  &-custom {
+    width: 100%;
+  }
+  &-wrapper {
+    width: 100%;
+    position: relative;
+  }
+  &-placeholder {
+    color: $placeholder-color;
+    font-size: 14px;
+    margin-right: auto;
+    padding-left: 10px;
+  }
+  &-value {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 35px;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid $gray-text-color;
+    cursor: pointer;
+    background-color: $white-color;
+    .wrapper-icon-select {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &-menu {
+    position: absolute;
+    z-index: 999;
+    top: 30px;
+    background-color: $white-color;
+    width: 100%;
+    border: 1px solid $gray-text-color;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-top: 10px;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    &-item {
+      list-style-type: none;
+      width: 100%;
+      cursor: pointer;
+      span {
+        display: block;
+        padding: 5px;
+        padding-left: 15px;
+      }
+      &:hover {
+        background-color: #f0f8ff;
+      }
+    }
+  }
+  &-menu-up {
+    top: -285%;
+    border: 1px solid $gray-text-color;
+    border-bottom: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  &-is-show {
+    opacity: 1;
+    pointer-events: all;
+  }
 }

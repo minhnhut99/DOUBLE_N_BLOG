@@ -1,9 +1,7 @@
-import { getCookie } from '@/utils/getCookie';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 import { auth } from '@/recoil/atoms/auth';
 const { token } = useRecoilValue(auth);
-console.log('token', token);
 // Create a custom Axios configuration
 const axiosConfig: AxiosRequestConfig = {
   baseURL: import.meta.env.VITE_API_CORE, // API base URL

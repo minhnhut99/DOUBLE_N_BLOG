@@ -1,16 +1,16 @@
-import Input from '@/components/input/Input';
-import Button from '@/components/button/Button';
-import GOOGLE_LOGO from '@/assets/images/googleLogo.png';
-import FACEBOOK_LOGO from '@/assets/images/facebookLogo.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import './Login.scss';
-import React, { useState } from 'react';
-import LoadingSpinner from '@/components/loading_spinner/LoadingSpinner';
 import { useLoginMutation } from '@/api/auth';
-import Icon from '@/components/icon/Icon';
 import { EYE_HIDDEN_ICON, EYE_SHOW_ICON } from '@/assets/icons/Icons';
-import NotiToast from '@/components/noti_toast/NotiToast';
+import FACEBOOK_LOGO from '@/assets/images/facebookLogo.png';
+import GOOGLE_LOGO from '@/assets/images/googleLogo.png';
+import Button from '@/components/button/Button';
+import Icon from '@/components/icon/Icon';
+import Input from '@/components/input/Input';
+import LoadingSpinner from '@/components/loading_spinner/LoadingSpinner';
+import React, { useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.scss';
+import { Path } from '@/constant/appConstant';
 interface IFormValues {
   username: string;
   password: string;
@@ -19,6 +19,7 @@ interface IFormValues {
 const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  console.log('loading Spinner', isLoading);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const loginMutation = useLoginMutation();
   const loginOptions = {
@@ -48,7 +49,8 @@ const Login = () => {
       remember: '',
     },
   });
-  const handleClickBtnLogin: SubmitHandler<IFormValues> = (data) => {
+  const handleClickBtnLogin: SubmitHandler<IFormValues> = (data, event) => {
+    event?.preventDefault();
     loginMutation.mutate({ ...data });
   };
   const handleClickBtnLoginGoogle = () => {
@@ -57,15 +59,11 @@ const Login = () => {
   const handleClickBtnLoginFacebook = () => {
     console.log('login facebook');
   };
-  const handleClickRedirectRegister = () => {
-    navigate('/register');
-  };
   const handleClickToggleShowPassword = () => {
     setIsShowPassword(!isShowPassword);
   };
   return (
     <React.Fragment>
-      <NotiToast />
       <div className="login">
         <div className="login-container">
           <h1 className="login-heading">Login</h1>
@@ -134,7 +132,7 @@ const Login = () => {
                   />
                   <label htmlFor="check-remember">Remember me?</label>
                 </div>
-                <Link to="/forgot-password">
+                <Link to={Path.forgot_password}>
                   <small>Forgot password?</small>
                 </Link>
               </div>
@@ -174,7 +172,7 @@ const Login = () => {
               <Button bgColor="white" fullWidth text="Login with Facebook" />
             </div>
             <div className="have-account-block">
-              <Link to="/register">
+              <Link to={Path.register}>
                 <small className="have-account">
                   You don't have an account?
                 </small>

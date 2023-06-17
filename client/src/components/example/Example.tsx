@@ -1,57 +1,30 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
-import Button from '@/components/button/Button';
-import Title from '@/components/title/Title';
-import { Controller, useForm } from 'react-hook-form';
-import Input from '@/components/input/Input';
-interface IFormValues {
-  title: string,
-  content: string,
-  desc: string,
-  cateId: number
-}
+import Select from '@/components/select/Select';
 const Example = () => {
-  const API_KEY = "iyikkyl1ntr73cppsj58bpsiprysja2ru13iw2z4iqeml1iw";
-  const [content, setContent] = useState<string>("")
-  const handleEditorChange = async (content: string, editor: any) => {
-    await setContent(content)
-  };
-  const onSubmit = (data: IFormValues) => {
-    data.content = content
-    console.log('dataMAser', data)
-  }
-  const { control, handleSubmit
-    , formState: { errors } } = useForm<IFormValues>(
-      {
-        defaultValues: {
-          title: "",
-          content: content,
-          desc: '',
-          cateId: 1
-        }
-      }
-    )
+  const opt = [
+    {
+      value: '1',
+      label: '1',
+    },
+    {
+      value: '2',
+      label: '2',
+    },
+    {
+      value: '3',
+      label: '3',
+    },
+  ];
+  const handleChangeSelect = () => {};
   return (
-    < Editor
-      value={content}
-      textareaName='content'
-      apiKey={API_KEY}
-      plugins="image"
-      init={{
-        height: 240,
-        menubar: true,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount'
-        ],
-        // toolbar: 'undo redo | formatselect | image ' +
-        // 'bold italic backcolor | alignleft aligncenter ' +
-        // 'alignright alignjustify | bullist numlist outdent indent | ' +
-        // 'removeformat | help',
-      }}
-      onEditorChange={handleEditorChange}
-    />
-  )
-}
+    <div></div>
+    // <div style={{ width: '200px' }}>
+    //   <Select
+    //     value={'1'}
+    //     title="Select category"
+    //     options={opt}
+    //     onChange={handleChangeSelect}
+    //   />
+    // </div>
+  );
+};
 export default Example;

@@ -2,20 +2,20 @@
 import axios, { AxiosResponse } from 'axios';
 const appClient = axios.create({});
 
-appClient.interceptors.request.use(
-  async (config: any) => {
-    const newConfig = { ...config };
-    newConfig.headers = {
-      ...config.headers,
-      'access-control-allow-origin': '*',
-      'Content-Type': 'application/json',
-    };
-    return newConfig;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
+// appClient.interceptors.request.use(
+//   async (config: any) => {
+//     const newConfig = { ...config };
+//     newConfig.headers = {
+//       ...config.headers,
+//       'access-control-allow-origin': '*',
+//       'Content-Type': 'application/json',
+//     };
+//     return newConfig;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
 
 appClient.interceptors.response.use(
   (response: AxiosResponse) => {

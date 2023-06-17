@@ -9,7 +9,7 @@
   &-container {
     display: flex;
     flex-direction: column;
-    padding: 10px 25px 20px 20px;
+    padding: 20px;
     background-color: $white-color;
     border-radius: 7px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
@@ -23,7 +23,7 @@
   &-birthday {
     width: 90%;
     input {
-      padding:8px;
+      padding: 8px;
       border-radius: 7px;
       outline: none;
       border: 1px solid $black-color;
@@ -39,11 +39,12 @@
   &-heading {
     text-align: center;
     text-transform: uppercase;
+    margin-bottom: 15px;
   }
   &-form-full {
     width: 100%;
     .register-form-item {
-      width: 95.5%;
+      width: 100%;
       input {
         width: 100%;
       }
@@ -57,7 +58,7 @@
     }
     .eye-show-hidden {
       position: absolute;
-      right: 3%;
+      right: 6%;
       top: 25%;
     }
     &-wrap {
@@ -65,10 +66,16 @@
       align-items: baseline;
       .res-wrap-birthday {
         width: 100%;
-       p {
-        margin-right: 10px;
-        font-size: 11px;
-       }
+        .register-birthday {
+          width: 95%;
+        }
+        input {
+          width: 100%;
+        }
+        p {
+          margin-right: 10px;
+          font-size: 11px;
+        }
         display: flex;
         align-items: center;
       }
@@ -76,7 +83,7 @@
   }
   &-form-item {
     position: relative;
-    margin-right: 10px;
+    padding-right: 10px;
     input {
       outline: none;
       width: 250px;
