@@ -11,7 +11,6 @@ const AuthController = {
     login: async (req, res) => {
         const { username, password } = req.body;
         const user = await UserModel.getUserByUsername(username);
-        console.log(user)
         if (!user.length) {
             httpHandle.fail(res, 'Invalid username or password');
         } else if (await bcrypt.compare(password, user[0].password)) {

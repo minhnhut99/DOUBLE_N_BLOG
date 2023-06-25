@@ -3,7 +3,7 @@ const util = require('util');
 const query = util.promisify(connection.query).bind(connection);
 
 const UserModel = {
-    getUserByUsername: async (name) => {
+    getUserByUsername: async (name, password) => {
         const strQuery = `
             SELECT u.u_id, password, u_name, u_gender, u_email, u_birthday, u_address, u_avatar, u_phone, u_role
             FROM users u INNER JOIN accounts a ON u.u_id = a.u_id 
