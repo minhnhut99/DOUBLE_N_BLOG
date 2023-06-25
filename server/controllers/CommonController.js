@@ -7,7 +7,6 @@ const CommonController = {
     getImage: async (req, res) => {
         const { img } = req.params;
         const pathImg = getUrlStogare(img);
-
         if (await fs.existsSync(pathImg)) {
             const stat = fs.statSync(pathImg);
             const fileSize = stat.size;
