@@ -1,12 +1,64 @@
 const httpHandle = require("../configs/httpHandle");
-const CommentModel = require("../models/CommentModel");
+const fs = require("fs");
 const PostModel = require("../models/PostModel");
 const ReactionModel = require("../models/ReactionModel");
+const { getUrlStogare, renderUrlImage } = require("../utils/utilCommon");
 
 const PostController = {
     getListPost: async (req, res) => {
         try {
-            const result = await PostModel.getListPost();
+            const posts = await PostModel.getListPost();
+            const result = posts.map((post) => {
+                return {
+                    ...post,
+                    p_thumbnail: post?.p_thumbnail ? renderUrlImage(post.p_thumbnail) : null
+                }
+            });
+            httpHandle.success(res, result, "Get List Post Success!");
+        } catch (error) {
+            httpHandle.error(res, error.message);
+        }
+    },
+    getListPostByTitle: async (req, res) => {
+        try {
+            const { title } = req.query;
+            const posts = await PostModel.getListPostByTitle(title);
+            const result = posts.map((post) => {
+                return {
+                    ...post,
+                    p_thumbnail: post?.p_thumbnail ? renderUrlImage(post.p_thumbnail) : null
+                }
+            });
+            httpHandle.success(res, result, "Get List Post Success!");
+        } catch (error) {
+            httpHandle.error(res, error.message);
+        }
+    },
+    getListPostByCategory: async (req, res) => {
+        try {
+            const { category } = req.query;
+            const posts = await PostModel.getListPostByCategory(category);
+            const result = posts.map((post) => {
+                return {
+                    ...post,
+                    p_thumbnail: post?.p_thumbnail ? renderUrlImage(post.p_thumbnail) : null
+                }
+            });
+            httpHandle.success(res, result, "Get List Post Success!");
+        } catch (error) {
+            httpHandle.error(res, error.message);
+        }
+    },
+    getListPostByAuthor: async (req, res) => {
+        try {
+            const { authorId } = req.query;
+            const posts = await PostModel.getListPostByAuthor(authorId);
+            const result = posts.map((post) => {
+                return {
+                    ...post,
+                    p_thumbnail: post?.p_thumbnail ? renderUrlImage(post.p_thumbnail) : null
+                }
+            });
             httpHandle.success(res, result, "Get List Post Success!");
         } catch (error) {
             httpHandle.error(res, error.message);
@@ -15,7 +67,13 @@ const PostController = {
     getListPostForAdmin: async (req, res) => {
         try {
             if (req.user.u_role === "admin") {
-                const result = await PostModel.getListPostForAdmin();
+                const posts = await PostModel.getListPostForAdmin();
+                const result = posts.map((post) => {
+                    return {
+                        ...post,
+                        p_thumbnail: post?.p_thumbnail ? renderUrlImage(post.p_thumbnail) : null
+                    }
+                });
                 httpHandle.success(res, result, "Get List Post Success!");
             } else {
                 httpHandle.forbidden(res, "You do not have permission to access");
@@ -27,13 +85,21 @@ const PostController = {
     getDetailPost: async (req, res) => {
         try {
             const { id } = req.params;
-            const result = await PostModel.getDetailPost(id);
-            httpHandle.success(res, result[0] ?? {}, "Get Detail Post Success!");
+            const posts = await PostModel.getDetailPost(id);
+            const result = posts.length === 0 ? {} :
+                {
+                    ...posts[0],
+                    p_thumbnail: posts[0]?.p_thumbnail ? renderUrlImage(posts[0].p_thumbnail) : null,
+                    u_avatar: posts[0]?.u_avatar ? renderUrlImage(posts[0].u_avatar) : renderUrlImage('avatar-default.jpg'),
+                }
+            httpHandle.success(res, result, "Get Detail Post Success!");
         } catch (error) {
             httpHandle.error(res, error.message);
         }
     },
     createPosts: async (req, res) => {
+        const file = req.file;
+        const url = getUrlStogare(file.filename);
         try {
             const { title, desc, content, cateId } = req.body;
             const { u_id } = req.user;
@@ -42,28 +108,45 @@ const PostController = {
                 desc,
                 content,
                 cateId,
-                userId: u_id
+                userId: u_id,
+                thumbnail: file.filename
             }
             await PostModel.createPosts(data);
             httpHandle.success(res, {}, "Create Post Success!");
         } catch (error) {
+            fs.unlink(url, (err) => { });
             httpHandle.error(res, error.message);
         }
     },
     updatePost: async (req, res) => {
+        const file = req.file;
         try {
             const { id } = req.params;
             const { title, desc, content, cateId } = req.body;
             const { u_id } = req.user;
             const infoPost = await PostModel.getDetailPost(id);
             if (infoPost[0] && (infoPost[0].u_id === u_id || u_role === "admin")) {
-                await PostModel.updatePosts({ id, title, desc, content, cateId });
-                httpHandle.success(res, {}, "Update Post success!");
+                const dataUpdate = { id, title, thumbnail: infoPost[0].p_thumbnail, desc, content, cateId };
+                const oldUrl = getUrlStogare(infoPost[0].p_thumbnail);
+                if (file) {
+                    dataUpdate.thumbnail = file.filename;
+                }
+                await PostModel.updatePosts(dataUpdate);
+                if (file) {
+                    fs.unlink(oldUrl, () => { httpHandle.success(res, {}, "Update Post success!"); });
+                } else {
+                    httpHandle.success(res, {}, "Update Post success!");
+                }
             } else {
                 httpHandle.fail(res, "You do not have permission to access");
             }
         } catch (error) {
-            httpHandle.error(res, error.message);
+            if (file) {
+                const newUrl = getUrlStogare(file.filename);
+                fs.unlink(newUrl, () => { httpHandle.error(res, error.message); });
+            } else {
+                httpHandle.error(res, error.message);
+            }
         }
     },
     browsePosts: async (req, res) => {
@@ -104,7 +187,7 @@ const PostController = {
             } else {
                 await ReactionModel.createReaction(postId, userId);
             }
-            httpHandle.success(res, {}, "Like post Success!")
+            httpHandle.success(res, {}, "Like post Success!");
         } catch (error) {
             httpHandle.error(res, error.message);
         }

@@ -3,8 +3,21 @@ const util = require('util');
 const query = util.promisify(connection.query).bind(connection);
 
 const UserModel = {
-    getUserByUsername: async (name) => {
-        const strQuery = `SELECT * FROM users u INNER JOIN accounts a ON u.u_id = a.u_id WHERE username = '${name}'`;
+    getUserByUsername: async (name, password) => {
+        const strQuery = `
+            SELECT u.u_id, password, u_name, u_gender, u_email, u_birthday, u_address, u_avatar, u_phone, u_role
+            FROM users u INNER JOIN accounts a ON u.u_id = a.u_id 
+            WHERE username = '${name}'
+        `;
+        const result = await query(strQuery);
+        return result;
+    },
+
+    getUserByGoogleId: async (id) => {
+        const strQuery = `
+            SELECT u_id, u_name, u_gender, u_email, u_birthday, u_address, u_avatar, u_phone, u_role 
+            FROM users WHERE google_id='${id}'
+            `;
         const result = await query(strQuery);
         return result;
     },
@@ -13,6 +26,15 @@ const UserModel = {
         const strQuery = `SELECT * FROM users WHERE u_id = ${id}`;
         const result = await query(strQuery);
         return result;
+    },
+
+    createUserByGoogle: async (data) => {
+        const strQueryNewUser = `
+                INSERT INTO users (u_name, u_gender, u_phone, u_email, u_address, u_role, u_avatar, google_id)
+                VALUES ('${data.name}', 'male', '', '${data.email}', '', 'user', '${data.picture}', '${data.google_id}');
+            `;
+        const newUser = await query(strQueryNewUser);
+        return newUser;
     },
 
     register: async (data) => {
@@ -50,7 +72,7 @@ const UserModel = {
 
     updateAvatarUser: async (id, filename) => {
         const strQuery = `
-            UPDATE users SET u_avatar = '${filename}', updated_at= NOW() WHERE u_id= ${id}
+            UPDATE users SET u_avatar = '${filename}' WHERE u_id= ${id}
         `;
         await query(strQuery);
     },

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const httpHandle = require('../configs/httpHandle');
 const UserModel = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 const fs = require('fs');
 const { getUrlStogare } = require('../utils/utilCommon');
 
@@ -27,6 +28,61 @@ const AuthController = {
             httpHandle.fail(res, 'Invalid username or password');
         }
     },
+
+    loginGoogle: async (req, res) => {
+        const { credential } = req.body;
+        const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
+
+        try {
+            const ticket = await client.verifyIdToken({
+                idToken: credential,
+                audience: process.env.CLIENT_ID_GOOGLE,
+            });
+            const data = ticket.getPayload();
+            const user = await UserModel.getUserByGoogleId(data.sub);
+            if (user.length === 1) { // Đã từng đăng nhập bằng tài khoản Google
+                const info = user[0];
+                const token = jwt.sign({ ...info }, process.env.SECRET_KEY, {
+                    expiresIn: 60 * 60 * 24 * 5,
+                });
+                const payload = {
+                    token,
+                    user: info,
+                };
+                httpHandle.success(res, payload, 'Login success!');
+            } else { // Chưa từng đăng nhập bằng tài khoản Google
+                const dataUserCreate = {
+                    google_id: data.sub,
+                    name: data.name,
+                    email: data.email,
+                    picture: data.picture
+                };
+                const resUser = await UserModel.createUserByGoogle(dataUserCreate);
+                const newUser = {
+                    u_id: resUser.insertId,
+                    u_avatar: data.picture,
+                    u_name: data.name,
+                    u_role: 'user',
+                    u_phone: '',
+                    u_gender: 'male',
+                    u_email: data.email,
+                    u_address: '',
+                    u_birthday: ''
+                };
+                const token = jwt.sign({ ...newUser }, process.env.SECRET_KEY, {
+                    expiresIn: data.exp - data.iat,
+                });
+                const payload = {
+                    token,
+                    user: newUser,
+                };
+                httpHandle.success(res, payload, 'Login success!');
+            }
+        } catch (error) {
+            httpHandle.fail(res, 'Invalid username or password');
+        }
+    },
+
     register: async (req, res) => {
         try {
             const { username, password, email, name, gender, birthday, address, phone } = req.body;
