@@ -1,0 +1,80 @@
+@import "@/styles/styles.scss";
+.profile-settings {
+  width: 100%;
+  padding: 20px;
+  .container {
+    width: 100%;
+    margin-top: 40px;
+    &-content {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    &-left {
+      width: 65%;
+      .user-form-full {
+        width: 100%;
+      }
+      .user-form-item {
+        width: 100%;
+        position: relative;
+        margin-bottom: 10px;
+        input {
+          width: 100%;
+          outline: none;
+          height: 32px;
+          padding-left: 10px;
+          border-radius: 7px;
+          border: 1px solid $black-color;
+          transition: all 0.2s;
+          &:focus {
+            border-color: $blue-color;
+          }
+        }
+      }
+      .user-wrap-birthday {
+        width: 100%;
+        margin-bottom: 10px;
+        .user-birthday {
+          width: 100%;
+        }
+        input {
+          outline: none;
+          height: 32px;
+          width: 100%;
+          padding-left: 10px;
+          border-radius: 7px;
+          border: 1px solid $black-color;
+          transition: all 0.2s;
+          &:focus {
+            border-color: $blue-color;
+          }
+        }
+        p {
+          margin-right: 10px;
+          font-size: 11px;
+        }
+        display: flex;
+        align-items: center;
+      }
+      .group-gender {
+        display: flex;
+        margin-bottom: 10px;
+      }
+    }
+    &-right {
+      width: 25%;
+      input[type="file"] {
+        display: none;
+      }
+      img {
+        height: 250px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  .btn-submit {
+    margin-top: 25px;
+  }
+}

@@ -11,23 +11,25 @@ interface IInputProps {
     | 'file';
   placeholder?: string;
   name: string;
-  value: any;
+  defaultValue?: any;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
   onFocus?: () => void;
   id?: string;
   accept?: string;
+  checked?: any;
 }
 const Input = ({
   id,
   type = 'text',
-  value,
   accept,
   placeholder,
   name,
   onChange,
   onBlur,
   onFocus,
+  defaultValue,
+  checked,
 }: IInputProps) => {
   return (
     <input
@@ -35,7 +37,8 @@ const Input = ({
       id={id}
       onChange={onChange}
       onBlur={onBlur}
-      value={value}
+      checked={checked}
+      defaultValue={defaultValue}
       type={type}
       placeholder={placeholder}
       name={name}

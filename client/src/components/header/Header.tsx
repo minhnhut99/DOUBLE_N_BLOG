@@ -18,7 +18,7 @@ import {
 } from '@/assets/icons/Icons';
 import './Header.scss';
 import { toast } from 'react-toastify';
-import { removeCookies } from '@/utils/utils';
+import { getCookie, removeCookies } from '@/utils/utils';
 import { Path } from '@/constant/appConstant';
 const Header = () => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -58,13 +58,13 @@ const Header = () => {
     removeCookies(['token', 'user']);
     resetAuth();
     toast.success('Logout successfully!');
-    navigate(Path.root);
+    navigate(Path.home);
   };
 
   const renderListMenu = () => (
     <>
       <li>
-        <NavLink to={Path.profile_settings}>Profile Settings</NavLink>
+        <NavLink to="user/profile-settings">User Settings</NavLink>
       </li>
       <li onClick={handleClickLogout}>Logout</li>
     </>
@@ -97,7 +97,7 @@ const Header = () => {
 
   const menuItems = [
     { path: Path.home, label: 'Home' },
-    { path: Path.blog, label: 'Blog' },
+    { path: Path.posts, label: 'Blog' },
     { path: Path.videos, label: 'Videos' },
     { path: Path.pages, label: 'Pages' },
   ];
@@ -142,10 +142,10 @@ const Header = () => {
           <Icon onClick={handleClickIconWrite} icon={WRITE_ICON} />
         </div>
         <div className="account-group" onClick={handleClickAccountGroup}>
-          {user?.username ? (
+          {user?.u_name ? (
             <>
               <Icon icon={USER_ICON} />
-              <p>{user?.username}</p>
+              <p>{user.u_name}</p>
             </>
           ) : (
             <ul className="account-text">

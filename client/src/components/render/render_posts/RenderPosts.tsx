@@ -3,6 +3,7 @@ import { useGetListPostQuery } from '@/api/post';
 import CardPost from '@/components/card_post/CardPost';
 import { ICardPost } from '@/type/post';
 import { formatDate } from '@/utils/utils';
+import Skeleton from '@/components/skeleton/Skeleton';
 
 const RenderPosts = () => {
   const getListPost = useGetListPostQuery();

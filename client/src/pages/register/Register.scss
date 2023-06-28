@@ -34,7 +34,10 @@
     font-size: 14px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin-right: 8px;
+    label {
+      margin-left: 2px;
+    }
   }
   &-heading {
     text-align: center;

@@ -7,16 +7,19 @@ import Input from '@/components/input/Input';
 import Select from '@/components/select/Select';
 import Title from '@/components/title/Title';
 import { Editor } from '@tinymce/tinymce-react';
+import imageCompression from 'browser-image-compression';
 import { ChangeEvent, useLayoutEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import './CreatePost.scss';
+import Skeleton from '@/components/skeleton/Skeleton';
+import LoadingSpinner from '@/components/loading_spinner/LoadingSpinner';
 
 interface IFormValues {
   title: string;
   content: string;
   desc: string;
   cateId: number;
-  file: File | null | Blob;
+  file: File | Blob | null;
 }
 
 const CreatePost = () => {
@@ -24,8 +27,10 @@ const CreatePost = () => {
   const editorContainerRef = useRef<any>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const [imageThumbnail, setImageThumbnail] = useState<File | null>(null);
+  const [isLoadingEditor, setIsLoadingEditor] = useState(true);
   const createPostMutation = useCreatePostMutation();
   const getAllCategory = useGetAllCategoryQuery();
+
   useLayoutEffect(() => {
     if (editorContainerRef.current) {
       editorContainerRef.current.style.height = '400px';
@@ -36,7 +41,9 @@ const CreatePost = () => {
       ele.style.width = '100%';
     }
   }, []);
+
   const onSubmit: SubmitHandler<IFormValues> = async (data) => {
+    console.log('data', data);
     const payload = new FormData();
     payload.append('title', data.title);
     payload.append('desc', data.desc);
@@ -46,6 +53,7 @@ const CreatePost = () => {
     createPostMutation.mutate(payload);
     resetPost();
   };
+
   const {
     control,
     handleSubmit,
@@ -61,6 +69,7 @@ const CreatePost = () => {
       file: null,
     },
   });
+
   const createPostOptions = {
     title: {
       required: 'Title post is required',
@@ -87,6 +96,7 @@ const CreatePost = () => {
       },
     },
   };
+
   const filePickerCallback = (
     callback: (filename: string, data: { title: string }) => void,
     value: string,
@@ -113,6 +123,7 @@ const CreatePost = () => {
     };
     input.click();
   };
+
   const resetPost = () => {
     setImagePreview('');
     reset();
@@ -120,11 +131,33 @@ const CreatePost = () => {
       editorRef.current.setContent('');
     }
   };
+
   const handleClickBtnCancel = () => {
     resetPost();
   };
+
   const handleSelectChange = (selectedValue: number) => {
     setValue('cateId', selectedValue);
+  };
+
+  const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    const options = {
+      maxSizeMB: 5,
+      maxWidthOrHeight: 1200,
+      useWebWorker: true,
+    };
+    try {
+      if (file) {
+        const compressFile = await imageCompression(file, options);
+        const imageObjUrl = URL.createObjectURL(compressFile);
+        setImagePreview(imageObjUrl);
+        setImageThumbnail(compressFile);
+        setValue('file', compressFile);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   return (
     <div className="create-post">
@@ -141,17 +174,9 @@ const CreatePost = () => {
                 <Input
                   id="create-thumbnail"
                   type="file"
-                  value={value || ''}
+                  defaultValue=""
                   accept="image/png, image/jpeg"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      const imageObjUrl = URL.createObjectURL(file);
-                      setImagePreview(imageObjUrl);
-                      setImageThumbnail(file);
-                    }
-                    onChange(e);
-                  }}
+                  onChange={handleChangeImage}
                   onBlur={onBlur}
                   name="file"
                 />
@@ -192,7 +217,7 @@ const CreatePost = () => {
                 render={({ field: { value, onChange, onBlur } }) => (
                   <Input
                     placeholder="Enter title"
-                    value={value}
+                    defaultValue={value}
                     onChange={onChange}
                     onBlur={onBlur}
                     name="title"
@@ -234,10 +259,14 @@ const CreatePost = () => {
           control={control}
           rules={createPostOptions.content}
           render={({ field }) => (
-            <div ref={editorContainerRef}>
+            <div ref={editorContainerRef} className="editor-inner">
+              {isLoadingEditor && <div className="editor-loading"></div>}
               <Editor
                 ref={editorRef}
-                onInit={(evt, editor) => (editorRef.current = editor)}
+                onInit={(evt, editor) => {
+                  editorRef.current = editor;
+                  setIsLoadingEditor(false);
+                }}
                 id="editorId"
                 textareaName="content"
                 plugins="image"
@@ -246,10 +275,9 @@ const CreatePost = () => {
                   file_picker_type: 'file image media',
                   file_picker_callback: filePickerCallback,
                   height: 400,
-                  content_style:
-                    '.editor_container {height: 400px}',
+                  content_style: '.editor_container {height: 400px}',
                   toolbar:
-                    'undo redo | formatselect | bold italic backcolor | \
+                    'undo redo | formatselect |fontsize fontfamily bold italic forecolor backcolor |image |  \
                         alignleft aligncenter alignright alignjustify | \
                         bullist numlist outdent indent | removeformat | help',
                 }}

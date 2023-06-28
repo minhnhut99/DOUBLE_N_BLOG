@@ -1,13 +1,12 @@
 import { useGetDetailPost } from '@/api/post';
 import SeparatorLine from '@/components/separator_line/SeparatorLine';
 import { colorCategory, formatDate } from '@/utils/utils';
-import { useCallback, useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import './DetailPost.scss';
 
 const DetailPost = () => {
   const { postId, category } = useParams();
-  console.log('category', category);
   const contentRef = useRef<any>(null);
   const { data: postData } = useGetDetailPost(postId);
   let colorCate = '';
@@ -25,7 +24,7 @@ const DetailPost = () => {
   }, [renderContent, postData]);
 
   return (
-    <div className="detail-page">
+    <div className="detail-page" tabIndex={-1}>
       <div className="wrapper-inner">
         <div className="detail-container">
           <div className="detail-container-left">
@@ -54,10 +53,14 @@ const DetailPost = () => {
           </div>
           <div className="detail-container-right">
             <div className="info-author">
-              <img
-                src="https://images.unsplash.com/photo-1686781483909-a5fb625ca043?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=400&q=60"
-                alt="logo"
-              />
+              <img src={postData?.u_avatar} alt={postData?.u_name} />
+            </div>
+            <div className="info-content">
+              <h3>About the author</h3>
+              <div>
+                <p>Full Name: {postData?.u_name}</p>
+                <p>Email: {postData?.u_email}</p>
+              </div>
             </div>
           </div>
         </div>

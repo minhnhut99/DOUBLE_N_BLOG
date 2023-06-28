@@ -16,6 +16,8 @@ export interface IGetPostResponse {
   count_comment: number;
   p_content: string;
   p_thumbnail: string;
+  u_avatar: string;
+  u_email: string;
   p_desc: string;
   p_title: string;
   u_name: string;

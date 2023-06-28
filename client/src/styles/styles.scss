@@ -7,7 +7,8 @@ $dark-color: #1f2934;
 $dark-blue-color: #161d26;
 $background-light-color: #e2e2e2;
 $placeholder-color: #757373;
-$skeleton-color: #0000001c;
+$skeleton-color-before: hsla(0, 0%, 0%, 0.02);
+$skeleton-color-after: hsla(0, 0%, 0%, 0.11);
 $header-height: 70px;
 
 *,

@@ -20,6 +20,7 @@ export const useGetAllListPostQuery = () => {
       return rs.data;
     },
     {
+      staleTime: Infinity,
       onSuccess: (data) => {},
       onError: (error: any) => {
         toast.error(error.message);
@@ -38,7 +39,7 @@ export const useGetListPostQuery = () => {
       return rs.data;
     },
     {
-      enabled: true,
+      staleTime: Infinity,
       onSuccess: (data) => {},
       onError: (error: any) => {
         toast.error(error.message);

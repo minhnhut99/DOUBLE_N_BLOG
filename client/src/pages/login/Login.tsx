@@ -19,7 +19,6 @@ interface IFormValues {
 const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  console.log('loading Spinner', isLoading);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const loginMutation = useLoginMutation();
   const loginOptions = {
@@ -53,12 +52,8 @@ const Login = () => {
     event?.preventDefault();
     loginMutation.mutate({ ...data });
   };
-  const handleClickBtnLoginGoogle = () => {
-    console.log('login google');
-  };
-  const handleClickBtnLoginFacebook = () => {
-    console.log('login facebook');
-  };
+  const handleClickBtnLoginGoogle = () => {};
+  const handleClickBtnLoginFacebook = () => {};
   const handleClickToggleShowPassword = () => {
     setIsShowPassword(!isShowPassword);
   };
@@ -76,7 +71,7 @@ const Login = () => {
                   render={({ field: { value, onChange, onBlur } }) => (
                     <Input
                       placeholder="username"
-                      value={value}
+                      defaultValue={value}
                       onChange={onChange}
                       onBlur={onBlur}
                       name="username"
@@ -96,7 +91,7 @@ const Login = () => {
                     <Input
                       placeholder="password"
                       type={isShowPassword ? 'text' : 'password'}
-                      value={value}
+                      defaultValue={value}
                       onChange={onChange}
                       onBlur={onBlur}
                       name="password"
@@ -120,7 +115,7 @@ const Login = () => {
                     render={({ field: { value, onChange, onBlur } }) => (
                       <Input
                         placeholder="remember"
-                        value={value}
+                        defaultValue={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         name="remember"

@@ -2,36 +2,31 @@ import React from 'react';
 import Icon from '@/components/icon/Icon';
 import { SKELETON_IMAGE_ICON } from '@/assets/icons/Icons';
 import './Skeleton.scss';
-interface ISkeleton {
-  count: number;
-}
-const Skeleton = ({ count }: ISkeleton) => {
-  const listItem = [];
-  for (let i = 0; i <= 7; i++) {
-    listItem.push(
-      <div className="skeleton-item" key={i}>
-        <div className="item-top">
+
+const Skeleton = () => {
+  return (
+    <div className="wrapper-inner">
+      <div className="skeleton-item">
+        <div className="skeleton item-top">
           <div className="img-avt">
             <Icon icon={SKELETON_IMAGE_ICON} />
           </div>
         </div>
         <div className="item-bottom">
-          <div className="bottom-left"></div>
+          <div className="bottom-left">
+            <div className="skeleton category"></div>
+            <div className="skeleton author"></div>
+            <div className="skeleton title"></div>
+            <div className="skeleton desc"></div>
+          </div>
           <div className="bottom-right">
             <div className="top">
-              <div className="right-left"></div>
-              <div className="right-right"></div>
+              <div className="skeleton right-left"></div>
+              <div className="skeleton right-right"></div>
             </div>
-            <div className="bottom"></div>
+            <div className="skeleton bottom"></div>
           </div>
         </div>
-      </div>
-    );
-  }
-  return (
-    <div className="skeleton">
-      <div className="wrapper-inner">
-        <div className="container">{listItem}</div>
       </div>
     </div>
   );

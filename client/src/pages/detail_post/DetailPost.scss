@@ -8,6 +8,7 @@
   }
   &-content {
     margin-top: 30px;
+    line-height: 1.8;
     img {
       width: 100%;
       object-fit: cover;
@@ -20,21 +21,16 @@
     align-self: center;
     justify-content: flex-start;
     &-left {
-      width: 75%;
+      width: 68%;
     }
     &-right {
-      width: 25%;
-      margin-left: 50px;
+      margin-left: auto;
       .info-author {
         width: 170px;
         height: 170px;
         border: 7px solid $black-color;
         border-radius: 5px;
-        transform: rotate(-20deg);
         transition: all 0.2s;
-        &:hover {
-          transform: rotate(0);
-        }
         img {
           width: 100%;
           height: 100%;
@@ -50,6 +46,14 @@
             top: 0;
             left: 0;
           }
+        }
+      }
+      .info-content {
+        margin-top: 20px;
+        h3 {
+          color: $black-color;
+          opacity: 0.7;
+          text-transform: uppercase;
         }
       }
     }

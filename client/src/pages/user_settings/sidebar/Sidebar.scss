@@ -1,0 +1,25 @@
+@import "@/styles/styles.scss";
+.sidebar {
+  width: 25%;
+  height: 100vh;
+  border-right: 1px solid #edeef0;
+  a {
+    text-decoration: none;
+  }
+  &-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    font-size: 17px;
+    p {
+      margin-left: 5px;
+    }
+  }
+  &-pending {
+  }
+  &-active {
+    li {
+      background-color: #d3f1f1;
+    }
+  }
+}

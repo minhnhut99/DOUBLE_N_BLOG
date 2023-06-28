@@ -1,0 +1,34 @@
+.like-cmt-group {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  margin-top: 5px;
+  .icon-like {
+    svg {
+      stroke: #5496ec;
+    }
+    position: relative;
+    .total-like {
+      position: absolute;
+      color: #5496ec;
+      font-size: 9px;
+      top: -5px;
+      right: -5px;
+      font-weight: bold;
+    }
+  }
+  .icon-cmt {
+    position: relative;
+    svg {
+      stroke: #a90ee6;
+    }
+    .total-cmt {
+      color: #a90ee6;
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      font-size: 9px;
+      font-weight: bold;
+    }
+  }
+}

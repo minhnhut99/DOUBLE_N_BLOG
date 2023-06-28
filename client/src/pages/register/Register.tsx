@@ -7,7 +7,7 @@ import Button from '@/components/button/Button';
 import Icon from '@/components/icon/Icon';
 import { EYE_HIDDEN_ICON, EYE_SHOW_ICON } from '@/assets/icons/Icons';
 import './Register.scss';
-interface FormValues {
+interface IFormValues {
   name: string;
   username: string;
   password: string;
@@ -81,7 +81,7 @@ const Register = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<IFormValues>({
     defaultValues: {
       username: '',
       password: '',
@@ -93,7 +93,7 @@ const Register = () => {
       address: '',
     },
   });
-  const handleClickBtnRegister: SubmitHandler<FormValues> = async ({
+  const handleClickBtnRegister: SubmitHandler<IFormValues> = async ({
     name,
     username,
     password,
@@ -138,7 +138,7 @@ const Register = () => {
                   render={({ field: { value, onChange, onBlur } }) => (
                     <Input
                       placeholder="full name"
-                      value={value}
+                      defaultValue={value}
                       onChange={onChange}
                       onBlur={onBlur}
                       name="name"
@@ -160,7 +160,7 @@ const Register = () => {
                     render={({ field: { value, onChange, onBlur } }) => (
                       <Input
                         placeholder="username"
-                        value={value}
+                        defaultValue={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         name="username"
@@ -181,7 +181,7 @@ const Register = () => {
                     render={({ field: { value, onChange, onBlur } }) => (
                       <Input
                         placeholder="email"
-                        value={value}
+                        defaultValue={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         name="email"
@@ -205,7 +205,7 @@ const Register = () => {
                       <Input
                         placeholder="password"
                         type={isShowPassword ? 'text' : 'password'}
-                        value={value}
+                        defaultValue={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         name="password"
@@ -231,7 +231,7 @@ const Register = () => {
                     render={({ field: { value, onChange, onBlur } }) => (
                       <Input
                         placeholder="confirm password"
-                        value={value}
+                        defaultValue={value}
                         type={isShowConfirmPassword ? 'text' : 'password'}
                         onChange={onChange}
                         onBlur={onBlur}
@@ -263,7 +263,7 @@ const Register = () => {
                     render={({ field: { value, onChange, onBlur } }) => (
                       <Input
                         placeholder="phone"
-                        value={value}
+                        defaultValue={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         name="phone"
@@ -285,7 +285,7 @@ const Register = () => {
                       <Input
                         type="text"
                         placeholder="Birthday"
-                        value={value}
+                        defaultValue={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         name="birthday"
@@ -312,7 +312,7 @@ const Register = () => {
                   render={({ field: { onChange, onBlur } }) => (
                     <Input
                       type="radio"
-                      value="men"
+                      defaultValue="men"
                       id="men"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -332,7 +332,7 @@ const Register = () => {
                   render={({ field: { onChange, onBlur } }) => (
                     <Input
                       type="radio"
-                      value="women"
+                      defaultValue="women"
                       id="women"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -351,7 +351,7 @@ const Register = () => {
                   render={({ field: { onChange, onBlur } }) => (
                     <Input
                       type="radio"
-                      value="other"
+                      defaultValue="other"
                       id="other"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -371,7 +371,7 @@ const Register = () => {
                   render={({ field: { value, onChange, onBlur } }) => (
                     <Input
                       placeholder="address"
-                      value={value}
+                      defaultValue={value}
                       onChange={onChange}
                       onBlur={onBlur}
                       name="address"
