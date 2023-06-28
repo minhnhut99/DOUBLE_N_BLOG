@@ -1,14 +1,14 @@
-import React from 'react'
-import "./Title.scss"
+import React from 'react';
+import './Title.scss';
 interface IText {
-  text: string
+  text: string;
 }
 const Title = ({ text }: IText) => {
   return (
-    <div className='title'>
+    <div className="title">
       <h1>{text}</h1>
     </div>
-  )
-}
+  );
+};
 
-export default Title
+export default Title;

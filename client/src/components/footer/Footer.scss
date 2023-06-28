@@ -1,0 +1,11 @@
+@import "@/styles/styles.scss";
+.footer {
+  background-color: $dark-blue-color;
+  &-container {
+    height: 100%;
+    text-align: center;
+    p {
+      color: $white-color;
+    }
+  }
+}

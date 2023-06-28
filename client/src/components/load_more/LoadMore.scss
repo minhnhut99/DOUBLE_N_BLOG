@@ -1,0 +1,17 @@
+@import "@/styles/styles.scss";
+.load-more {
+  text-align: center;
+  .more-btn {
+    cursor: pointer;
+    width: 190px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid $gray-text-color;
+    font-weight: bold;
+    font-size: 15px;
+    transition: ease-in 0.2s;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

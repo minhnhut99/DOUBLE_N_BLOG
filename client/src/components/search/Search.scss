@@ -5,10 +5,11 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   opacity: 0;
   visibility: hidden;
   transition: all 0.27s;
+  z-index: 999;
   &-active {
     visibility: visible;
     opacity: 1;
@@ -46,7 +47,7 @@
       outline: none;
       padding-left: 20px;
       font-size: 20px;
-      transition: all .2s;
+      transition: all 0.2s;
       font-weight: bold;
       color: $black-color;
       border: 2px solid $black-color;

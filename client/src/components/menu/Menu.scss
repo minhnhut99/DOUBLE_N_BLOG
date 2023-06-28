@@ -1,0 +1,26 @@
+@import "@/styles/styles.scss";
+.menu {
+  height: auto;
+  width: fit-content;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 300;
+  padding: 10px 0;
+  &-container {
+    border-radius: 3px;
+    background-color: $white-color;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    list-style-type: none;
+  }
+  li {
+    padding: 3px 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    &:hover {
+      background-color: #f0f8ff;
+    }
+  }
+}

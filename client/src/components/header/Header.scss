@@ -3,7 +3,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 50px;
+  height: $header-height;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-bottom: 2px solid $gray-text-color;
+  position: sticky;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  background-color: $white-color;
   .icon-menu {
     visibility: hidden;
     opacity: 0;
@@ -18,6 +26,32 @@
     visibility: hidden;
     opacity: 0;
   }
+  .account-group {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    .account-text {
+      display: flex;
+      li {
+        margin-left: 5px;
+        text-decoration: underline;
+        transition: ease-in 0.2s;
+        &:hover {
+          a {
+            display: inline-block;
+            color: $blue-color;
+          }
+        }
+      }
+    }
+    p {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
   &-logo {
     img {
       width: 250px;
@@ -27,6 +61,15 @@
   }
   &-menu {
     display: flex;
+    a {
+      text-decoration: none;
+    }
+    .menu-pending {
+      color: inherit;
+    }
+    .menu-active {
+      color: $blue-color;
+    }
     li {
       margin-left: 30px;
       list-style-type: none;
@@ -37,6 +80,14 @@
       &:hover {
         color: $blue-color;
       }
+    }
+  }
+  .noti-writter {
+    display: flex;
+    gap: 3px;
+    margin-right: 2px;
+    div {
+      cursor: pointer;
     }
   }
   &-right {

@@ -1,35 +1,30 @@
-import React from 'react'
-import './Example.scss'
-import { useState } from "react"
-import axios from "axios"
-import { useQuery } from "@tanstack/react-query"
-import { useSearchParams } from 'react-router-dom'
-import Modal from '../modal/Modal'
+import Select from '@/components/select/Select';
 const Example = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const handleClickBtnOpenModal = () => {
-    setIsOpen(!isOpen)
-  }
-  // const getFetch = async () => {
-  //   const rs = await axios.get("https://dummyjson.com/products?limit=10&skip=10&select=title,price")
-  //   return rs.data
-  // }
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ["fetchData"],
-  //   queryFn: () => getFetch()
-  // }
-  // )
-  // console.log('isLoadng', isLoading)
-  // console.log('dataMaster', data.products)
+  const opt = [
+    {
+      value: '1',
+      label: '1',
+    },
+    {
+      value: '2',
+      label: '2',
+    },
+    {
+      value: '3',
+      label: '3',
+    },
+  ];
+  const handleChangeSelect = () => {};
   return (
-    <>
-      <button onClick={handleClickBtnOpenModal}>click</button>
-      <Modal setIsOpen={setIsOpen} children={<div>Modal</div>} isOpen={isOpen} />
-      <div>
-        123
-      </div>
-    </>
-  )
-}
-
-export default Example
+    <div></div>
+    // <div style={{ width: '200px' }}>
+    //   <Select
+    //     value={'1'}
+    //     title="Select category"
+    //     options={opt}
+    //     onChange={handleChangeSelect}
+    //   />
+    // </div>
+  );
+};
+export default Example;

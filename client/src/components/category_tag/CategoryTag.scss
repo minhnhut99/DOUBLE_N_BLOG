@@ -1,0 +1,17 @@
+@import "@/styles/styles.scss";
+.category-tag {
+  .container {
+    .tag-list {
+      display: flex;
+      max-width: 35%;
+      flex-wrap: wrap;
+      li {
+        padding: 6px 8px;
+        background-color: #f0f4f4;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        font-size: 15px;
+      }
+    }
+  }
+}
